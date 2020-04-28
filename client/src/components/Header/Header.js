@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Header.css';
 import Login from '../Login/Login.js';
 
-export default function Header() {
+export default function Header({ handleSetToken }) {
   const [searchHighlight, setSearchHighlight] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
 
@@ -12,7 +12,7 @@ export default function Header() {
 
   const handleClickWindow = (e) => {
     if (e.target.id !== 'search') setSearchHighlight(false)
-    if (showLogin && e.target.className !== 'login-modal-content' && e.target.id !== 'login-btn') setShowLogin(false)
+    if (e.target.className === 'login-modal') setShowLogin(false)
   }
 
   const handleClickLogin = () => {
@@ -29,11 +29,11 @@ export default function Header() {
 
   useEffect(() => {
     window.addEventListener('click', handleClickWindow)
-  })
+  }, [searchHighlight, showLogin])
 
   return (
     <>
-    {showLogin && <Login handleExitLogin={handleExitLogin}/>}
+    {showLogin && <Login handleExitLogin={handleExitLogin} handleSetToken={handleSetToken} />}
     <div className="top-wrapper">
       <span className="material-icons">whatshot</span>
       <div className="search-wrapper" style={searchHighlight ? {border: '#1DA1F2 1px solid'} : {}}>

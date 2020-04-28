@@ -1,23 +1,24 @@
-import React, { useState, useEffect }from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import './Login.css';
 
-export default function Login({ handleExitLogin }) {
-  const[emailHighlight, setEmailHighlight] = useState(false)
-  const[passwordHighlight, setPasswordHighlight] = useState(false)
-
-  const handleHighlight = (e) => {
-    if (e.target.name === 'email') setEmailHighlight(true)
-    if (e.target.name === 'password') setPasswordHighlight(true)
+export default function Login({ handleExitLogin, handleSetToken }) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  
+  const handleInputChange = (e) => {
+    if (e.target.name === 'username') setUsername(e.target.value)
+    if (e.target.name === 'password') setPassword(e.target.value)
   }
-
-  const handleUnhighlight = (e) => {
-    if (e.target.name !== 'email') setEmailHighlight(false)
-    if (e.target.name !== 'password') setPasswordHighlight(false)
+  
+  const handleSubmitLogin = (e) => {
+    e.preventDefault()
+    if (username.length && password.length) {
+      axios.post('http://localhost:8000/api/v1/auth/token/', {username, password})
+      .then(res => handleSetToken(res.data.token))
+      .catch(err => console.log(err))
+    }
   }
-
-  useEffect(() => {
-    window.addEventListener('click', handleUnhighlight)
-  }, [])
 
   return (
     <div className='login-modal'>
@@ -29,9 +30,9 @@ export default function Login({ handleExitLogin }) {
         </div>
         <div className="login-modal-body">
           <form>
-            <input onClick={handleHighlight} style={emailHighlight ? {borderBottom: '#1DA1F2 1px solid'} : {borderBottom: '#757575 1px solid'}} type="email" name="email" placeholder="Email" autoComplete="off" required />
-            <input onClick={handleHighlight} style={passwordHighlight ? {borderBottom: '#1DA1F2 1px solid'} : {borderBottom: '#757575 1px solid'}} type="password" name="password" placeholder="Password" autoComplete="off" required/>
-            <button type="submit" id="login-submit"><strong>Log in</strong></button>
+            <input onChange={handleInputChange} type="text" name="username" placeholder="Username" autoComplete="off" required />
+            <input onChange={handleInputChange} type="password" name="password" placeholder="Password" autoComplete="off" required/>
+            <button onClick={handleSubmitLogin} id="login-submit"><strong>Log in</strong></button>
           </form>
         </div>
         <div className="modal-footer">

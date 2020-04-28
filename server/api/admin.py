@@ -3,7 +3,7 @@ from api.models import *
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'first_name', 'last_name', 'is_tutor', 'is_student')
+    list_display = ('id', 'email', 'first_name', 'last_name', 'is_tutor', 'is_student')
 
 admin.site.register(User, UserAdmin)
 

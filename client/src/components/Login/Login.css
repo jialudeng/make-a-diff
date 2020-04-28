@@ -58,7 +58,8 @@
   margin: 15px;
 }
 
-input[type=email], input[type=password] {
+input[name=username], input[name=password] {
+  border-bottom: #757575 1px solid;
   color: #FFFFFF;
   background-color: #1C2733;
   width: 100%;
@@ -70,6 +71,10 @@ input[type=email], input[type=password] {
   /* border-bottom: #757575 solid 1px; */
   box-sizing: border-box;
   font-size: 14px;
+}
+
+input[name=username]:focus, input[name=password]:focus {
+  border-bottom: #1DA1F2 1px solid;
 }
 
 #login-submit {
@@ -87,7 +92,7 @@ input[type=email], input[type=password] {
   transition: ease-in-out 0.1s;
 }
 
-button:active {
+button:focus {
   outline: none;
 }
 
