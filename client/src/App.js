@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import Header from './components/Header/Header.js';
 import Ticket from './components/Ticket/Ticket.js';
 
 export default function App() {
@@ -17,7 +18,10 @@ export default function App() {
 
   return (
     <div className="App">
-      <div className="Board">
+      <div className='header'>
+        <Header />
+      </div>
+      <div className="board">
         {tickets.map((ticket, index) => (<Ticket key={index} ticket={ticket} />))}
       </div>
     </div>

@@ -3,11 +3,15 @@
   border-bottom: none;
   display: flex;
   flex-direction: row;
-  width: 500px;
+  width: 600px;
   height: 100%;
 }
 
-.ticket-wrapper:last-child{
+.ticket-wrapper:first-child {
+  border-top: none;
+}
+
+.ticket-wrapper:last-child {
   border-bottom: #757575 solid 1px;
 }
 
