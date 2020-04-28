@@ -17,8 +17,6 @@ export default function Ticket({ ticket }) {
 
   const [tooltip, setTooltip] = useState(false)
 
-  const [modal, setModal] = useState(false)
-
   useEffect(() => {
     handleResize()
     window.addEventListener('resize', handleResize)
