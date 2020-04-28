@@ -12,6 +12,12 @@ class TagAdmin(admin.ModelAdmin):
 
 admin.site.register(Tag, TagAdmin)
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'content', 'author', 'created_at')
+
+
+admin.site.register(Comment, CommentAdmin)
+
 class TicketAdmin(admin.ModelAdmin):
     list_display = ('id', 'author', 'title', 'tags_string')
 

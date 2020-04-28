@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from api.models import Ticket, Tag
-from api.serializers import TicketSerializer, TagSerializer
+from api.models import Ticket, Tag, Comment
+from api.serializers import TicketSerializer, TagSerializer, CommentSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -29,3 +29,15 @@ class TagListView(generics.ListCreateAPIView):
 class TagView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+class CommentListView(APIView):
+    def get(self, request, ticket_id):
+        ticket = Ticket.objects.get(id=ticket_id)
+        comments = ticket.comments
+        serialized_comments = CommentSerializer(comments, many=True)
+        return Response(serialized_comments.data)
+
+
+class CommentView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer

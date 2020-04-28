@@ -1,0 +1,14 @@
+.ticket-tooltip {
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  margin-top: 5px;
+  font-size: 15px;
+  opacity: 0.9;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
