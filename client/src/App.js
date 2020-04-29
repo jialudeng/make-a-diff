@@ -6,18 +6,19 @@ import Ticket from './components/Ticket/Ticket.js';
 
 export default function App() {
   const [tickets, setTickets] = useState([])
-  const [token, setToken] = useState('')
+  const [signedIn, setSignedIn] = useState(false)
 
   const handleSetToken = (token) => {
-    setToken(`Token ${token}`)
+    window.localStorage.setItem('jwt', `Token ${token}`)
     console.log(token)
+    setSignedIn(true)
   }
 
   useEffect(() => {
     // fetch tickets from server and setState
     axios.get('http://localhost:8000/api/v1/tickets/')
       .then(res => {
-        setTickets(res.data)
+        setTickets(res.data)  
       })
   }, [tickets])
 
@@ -25,10 +26,10 @@ export default function App() {
   return (
     <div className="App">
       <div className='header'>
-        <Header handleSetToken={handleSetToken} />
+        <Header handleSetToken={handleSetToken} signedIn={signedIn}/>
       </div>
       <div className="board">
-        {tickets.map((ticket, index) => (<Ticket key={index} ticket={ticket} />))}
+        {tickets.map((ticket, index) => (<Ticket key={index} ticket={ticket} signedIn={signedIn}/>))}
       </div>
     </div>
   );

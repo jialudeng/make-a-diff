@@ -12,6 +12,7 @@ export default function Login({ handleExitLogin, handleSetToken }) {
   }
   
   const handleSubmitLogin = (e) => {
+    // add logic to exit the modal if token has been set
     e.preventDefault()
     if (username.length && password.length) {
       axios.post('http://localhost:8000/api/v1/auth/token/', {username, password})

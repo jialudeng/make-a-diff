@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Header.css';
 import Login from '../Login/Login.js';
 
-export default function Header({ handleSetToken }) {
+export default function Header({ handleSetToken, signedIn }) {
   const [searchHighlight, setSearchHighlight] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
 
@@ -33,17 +33,29 @@ export default function Header({ handleSetToken }) {
 
   return (
     <>
-    {showLogin && <Login handleExitLogin={handleExitLogin} handleSetToken={handleSetToken} />}
+    {showLogin && !signedIn && <Login handleExitLogin={handleExitLogin} handleSetToken={handleSetToken} />}
     <div className="top-wrapper">
-      <span className="material-icons">whatshot</span>
-      <div className="search-wrapper" style={searchHighlight ? {border: '#1DA1F2 1px solid'} : {}}>
-        <span className="material-icons" id="search-icon" style={searchHighlight ? {color:'#1DA1F2'} : {}}>search</span>
-        <input type="text" placeholder="Search Ticket" id="search" onClick={handleHighlightSearch}/>
+      <div className="empty-header-space"></div>
+      <div className="logo-search">
+        <span className="material-icons" id="header-logo">whatshot</span>
+        <div className="search-wrapper" style={searchHighlight ? {border: '#1DA1F2 1px solid'} : {}}>
+          <span className="material-icons" id="search-icon" style={searchHighlight ? {color:'#1DA1F2'} : {}}>search</span>
+          <input type="text" placeholder="Search Ticket" id="search" onClick={handleHighlightSearch}/>
+        </div>
       </div>
-      <div className="button-wrapper">
+      {signedIn 
+        ? 
+        <div className='profile-icon-wrapper'>
+          <span className="material-icons" id="profile-logo">face</span>
+        </div> 
+        : 
+        <div className="button-wrapper">
         <div id="login-btn" onClick={handleClickLogin}><strong>Log In</strong></div>
         <div id="signup-btn" onClick={handleClickSignup}>Sign Up</div>
       </div>
+      
+      }
+
     </div>
     </>
   )

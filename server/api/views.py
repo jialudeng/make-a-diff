@@ -19,8 +19,16 @@ class TicketListView(generics.ListCreateAPIView):
     serializer_class = TicketSerializer
 
 class TicketView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
+
+class TicketViewTwilio(APIView):
+    def post(self, request, ticket_id):
+        
+
 
 class TagListView(generics.ListCreateAPIView):
     queryset = Tag.objects.all()

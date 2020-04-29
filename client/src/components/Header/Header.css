@@ -7,6 +7,15 @@
   align-items: center;
 }
 
+.empty-header-space {
+  width: 15vw;
+}
+
+.logo-search {
+  display: flex;
+  align-items: center;
+}
+
 .search-wrapper {
   background-color: #283340;
   width: 30vw;
@@ -15,6 +24,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  border: 1px solid #283340;
 }
 
 #search-icon {
@@ -36,7 +46,15 @@ input:focus {
   outline: none;
 }
 
+.profile-icon-wrapper {
+  width: 15vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .button-wrapper {
+  width: 15vw;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -86,3 +104,13 @@ input:focus {
   background-color: rgb(26, 145, 218);
 }
 
+#header-logo {
+  color: #FFFFFF;
+  font-size: 26px;
+  margin-right: 10px;
+}
+
+#profile-logo {
+  color: #FFFFFF;
+  font-size: 30px;
+}

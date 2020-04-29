@@ -13,7 +13,7 @@ export default function Tooltip({ top, left }) {
 
   return (
     <div className="ticket-tooltip" style={{top, left: left - width}}ref={tooltip}>
-      <span>Connect us via SMS</span>
+      <span>Claim the ticket</span>
     </div>
   )
 }

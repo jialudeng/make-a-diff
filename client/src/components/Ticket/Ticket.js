@@ -6,7 +6,7 @@ import './Ticket.css';
 import Tooltip from './Tooltip.js';
 
 
-export default function Ticket({ ticket }) {
+export default function Ticket({ ticket, signedIn }) {
   const claimIcon = useRef(null)
 
   const[tooltipTop, setTooltipTop] = useState(0)
@@ -36,13 +36,11 @@ export default function Ticket({ ticket }) {
     axios.get(`http://localhost:8000/api/v1/tickets/${ticket.id}/comments`)
       .then(res => {
         console.log(res.data)
-        
       })
   }
 
   const handleClaim = () => {
-    // PATCH request to update claim_by with the user's ID as fk
-    // change the icon to diff color
+
     console.log('claimed')
   }
 
@@ -71,7 +69,7 @@ export default function Ticket({ ticket }) {
           <div className='icon-wrapper'>
             <i className="material-icons md-dark favorite_border" onClick={handleUpvote} style={upvoted ? {color: '#E91E63'} : {}}>{upvoted ? 'favorite' : 'favorite_border'}</i>
             <i className="material-icons md-dark chat" onClick={handleComment}>chat</i>
-            <i className="material-icons md-dark face" ref={claimIcon} onClick={handleClaim} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>face</i>
+            <i className="material-icons md-dark face" ref={claimIcon} onClick={handleClaim} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>smartphone</i>
             {tooltip && <Tooltip top={tooltipTop} left={tooltipLeft}/>}
           </div>
         </div>

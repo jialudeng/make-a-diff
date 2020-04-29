@@ -68,7 +68,7 @@ input[name=username], input[name=password] {
   display: inline-block;
   /* border: 1px solid #ccc; */
   border: none;
-  /* border-bottom: #757575 solid 1px; */
+  border-bottom: #757575 solid 1px;
   box-sizing: border-box;
   font-size: 14px;
 }
