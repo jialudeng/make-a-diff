@@ -6,6 +6,7 @@ class User(AbstractUser):
     is_student = models.BooleanField(default=True, null=False)
     avatar = models.URLField(null=True, blank=True)
     grade = models.IntegerField(default=None, null=True, blank=True)
+    phone = models.IntegerField(default=None, null=True, blank=True)
 
 class Tag(models.Model):
     def __str__(self):
@@ -30,6 +31,7 @@ class Ticket(models.Model):
     resolved = models.BooleanField(default=False)
     liked_by = models.ManyToManyField(User, blank=True)
     comments = models.ManyToManyField(Comment, blank=True)
+    sms = models.TextField(default=None, blank=True, null=True)
 
 
     def tags_string(self):

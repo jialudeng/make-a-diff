@@ -6,9 +6,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from twilio.rest import Client
+from api.config.twilio import TWILIO_account_sid, TWILIO_auth_token, TWILIO_phone
 
 class UserProfileView(APIView):
-    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -19,16 +20,36 @@ class TicketListView(generics.ListCreateAPIView):
     serializer_class = TicketSerializer
 
 class TicketView(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
 
 class TicketViewTwilio(APIView):
-    def post(self, request, ticket_id):
-        
+    permission_classes = [IsAuthenticated]
 
+    def patch(self, request, ticket_id):
+        print(request.data['sms'])
+        ticket = Ticket.objects.get(id=ticket_id)
+        phone = ticket.author.phone
+        ticket.claimed_by = request.user
+        ticket.sms = request.data['sms']
+        ticket.save()
+        serialized_ticket = TicketSerializer(ticket)
+
+        # Your Account SID from twilio.com/console
+        account_sid = TWILIO_account_sid
+        # Your Auth Token from twilio.com/console
+        auth_token  = TWILIO_auth_token
+
+        client = Client(account_sid, auth_token)
+
+        message = client.messages.create(
+            to=f"+1{phone}", 
+            from_=TWILIO_phone,
+            body=ticket.sms)
+
+        return Response(serialized_ticket.data)
 
 class TagListView(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
