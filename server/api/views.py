@@ -19,17 +19,23 @@ class TicketListView(generics.ListCreateAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
 
-class TicketView(generics.RetrieveUpdateDestroyAPIView):
+class TicketView(APIView):
     permission_classes = [IsAuthenticated]
     
-    queryset = Ticket.objects.all()
-    serializer_class = TicketSerializer
+    def patch(self, request, pk):
+        ticket = Ticket.objects.get(id=pk)
+        ticket.liked_by.add(request.user)
+        ticket.save()
+        serialized_ticket = TicketSerializer(ticket)
+
+        return Response(serialized_ticket.data)
+        
+
 
 class TicketViewTwilio(APIView):
     permission_classes = [IsAuthenticated]
 
     def patch(self, request, ticket_id):
-        print(request.data['sms'])
         ticket = Ticket.objects.get(id=ticket_id)
         phone = ticket.author.phone
         ticket.claimed_by = request.user
@@ -37,9 +43,7 @@ class TicketViewTwilio(APIView):
         ticket.save()
         serialized_ticket = TicketSerializer(ticket)
 
-        # Your Account SID from twilio.com/console
         account_sid = TWILIO_account_sid
-        # Your Auth Token from twilio.com/console
         auth_token  = TWILIO_auth_token
 
         client = Client(account_sid, auth_token)
