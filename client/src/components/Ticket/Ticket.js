@@ -5,6 +5,7 @@ import { format } from 'timeago.js';
 import './Ticket.css';
 import Tooltip from './Tooltip.js';
 import SMS from '../SMS/SMS.js';
+import Comment from '../Comment/Comment.js';
 
 
 export default function Ticket({ ticket }) {
@@ -25,7 +26,7 @@ export default function Ticket({ ticket }) {
 
   const [showSMS, setShowSMS] = useState(false)
 
-
+  const [showComment, setShowComment] = useState(false)
 
   const handleResize = () => {
     setTooltipTop(claimIcon.current.offsetTop + claimIcon.current.clientHeight)
@@ -37,22 +38,19 @@ export default function Ticket({ ticket }) {
       setUpvoted(true)
       ticket.liked_by.push(userID)
       axios.patch(`http://localhost:8000/api/v1/tickets/${ticket.id}/`, {liked_by: `${ticket.liked_by}`})
-        .then(res => console.log(res))
         .catch(err => console.log(err))
     } else if (token && userID && upvoted) {
         setUpvoted(false)
         ticket.liked_by.splice(ticket.liked_by.indexOf(userID), 1)
         axios.patch(`http://localhost:8000/api/v1/tickets/${ticket.id}/`, {liked_by: `${ticket.liked_by.length > 0 ? ticket.liked_by : ','}`})
-          .then(res => console.log(res))
           .catch(err => console.log(err))
     } else alert('Please log in to upvote')
   }
 
   const handleComment = () => {
-    axios.get(`http://localhost:8000/api/v1/tickets/${ticket.id}/comments/`)
-      .then(res => {
-        console.log(res.data)
-      })
+    if (token && userID && !showComment) {
+      setShowComment(true)
+    }
   }
 
   const handleClaim = () => {
@@ -95,6 +93,7 @@ export default function Ticket({ ticket }) {
   return (
     <>
       {showSMS && <SMS handleCloseSMS={handleCloseSMS} ticketId={ticket.id}/>}
+      {showComment && <Comment token={token} userID={userID} ticketID={ticket.id} />}
       <div className="ticket-wrapper">
         <div className="avatar-wrapper">
           <img src={ticket.author.avatar} alt="user avatar" className="avatar"></img>

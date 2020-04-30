@@ -19,7 +19,6 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class MultipartM2MField(serializers.Field):
     def to_representation(self, obj):
-        print(obj.values_list('id', flat=True))
         return obj.values_list('id', flat=True).order_by('id')
     
     def to_internal_value(self, data):

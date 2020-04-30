@@ -4,7 +4,9 @@ import Login from '../Login/Login.js';
 
 export default function Header({ handleSetToken, handleSetUserID }) {
   const [searchHighlight, setSearchHighlight] = useState(false)
+
   const [showLogin, setShowLogin] = useState(false)
+  
   const [signedIn, setSignedIn] = useState(false)
 
   const handleHighlightSearch = () => {

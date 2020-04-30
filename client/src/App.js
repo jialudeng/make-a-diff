@@ -16,13 +16,11 @@ export default function App() {
   }
 
   useEffect(() => {
-    // fetch tickets from server and setState
     axios.get('http://localhost:8000/api/v1/tickets/')
       .then(res => {
         setTickets(res.data)  
       })
   }, [])
-
 
   return (
     <div className="App">
