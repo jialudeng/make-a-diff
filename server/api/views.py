@@ -19,18 +19,11 @@ class TicketListView(generics.ListCreateAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
 
-class TicketView(APIView):
+class TicketView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     
-    def patch(self, request, pk):
-        ticket = Ticket.objects.get(id=pk)
-        ticket.liked_by.add(request.user)
-        ticket.save()
-        serialized_ticket = TicketSerializer(ticket)
-
-        return Response(serialized_ticket.data)
-        
-
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
 
 class TicketViewTwilio(APIView):
     permission_classes = [IsAuthenticated]

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './Header.css';
 import Login from '../Login/Login.js';
 
-export default function Header({ handleSetToken, signedIn }) {
+export default function Header({ handleSetToken, handleSetUserID }) {
   const [searchHighlight, setSearchHighlight] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
+  const [signedIn, setSignedIn] = useState(false)
 
   const handleHighlightSearch = () => {
     setSearchHighlight(true)
@@ -27,13 +28,18 @@ export default function Header({ handleSetToken, signedIn }) {
     setShowLogin(false)
   }
 
+  const handleSignedIn = () => {
+    setSignedIn(true)
+  }
+
   useEffect(() => {
+    if (window.localStorage.getItem('jwt')) handleSignedIn()
     window.addEventListener('click', handleClickWindow)
   }, [searchHighlight, showLogin])
 
   return (
     <>
-    {showLogin && !signedIn && <Login handleExitLogin={handleExitLogin} handleSetToken={handleSetToken} />}
+    {showLogin && !signedIn && <Login handleExitLogin={handleExitLogin} handleSetToken={handleSetToken} handleSignedIn={handleSignedIn} handleSetUserID={handleSetUserID} />}
     <div className="top-wrapper">
       <div className="empty-header-space"></div>
       <div className="logo-search">

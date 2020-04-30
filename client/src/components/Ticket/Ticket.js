@@ -4,23 +4,28 @@ import { format } from 'timeago.js';
 
 import './Ticket.css';
 import Tooltip from './Tooltip.js';
+import SMS from '../SMS/SMS.js';
 
 
-export default function Ticket({ ticket, signedIn }) {
+export default function Ticket({ ticket }) {
+
   const claimIcon = useRef(null)
 
-  const[tooltipTop, setTooltipTop] = useState(0)
+  const [token, setToken] = useState(null)
 
-  const[tooltipLeft, setTooltipLeft] = useState(0)
+  const [userID, setUserID] = useState(null)
+
+  const [tooltipTop, setTooltipTop] = useState(0)
+
+  const [tooltipLeft, setTooltipLeft] = useState(0)
 
   const [upvoted, setUpvoted] = useState(false)
 
   const [tooltip, setTooltip] = useState(false)
 
-  useEffect(() => {
-    handleResize()
-    window.addEventListener('resize', handleResize)
-  }, [])
+  const [showSMS, setShowSMS] = useState(false)
+
+
 
   const handleResize = () => {
     setTooltipTop(claimIcon.current.offsetTop + claimIcon.current.clientHeight)
@@ -28,20 +33,35 @@ export default function Ticket({ ticket, signedIn }) {
   }
 
   const handleUpvote = () => {
-    
-    setUpvoted(!upvoted)
+    if (token && userID && !upvoted) {
+      setUpvoted(true)
+      ticket.liked_by.push(userID)
+      axios.patch(`http://localhost:8000/api/v1/tickets/${ticket.id}/`, {liked_by: `${ticket.liked_by}`})
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    } else if (token && userID && upvoted) {
+        setUpvoted(false)
+        ticket.liked_by.splice(ticket.liked_by.indexOf(userID), 1)
+        axios.patch(`http://localhost:8000/api/v1/tickets/${ticket.id}/`, {liked_by: `${ticket.liked_by.length > 0 ? ticket.liked_by : ','}`})
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+    } else alert('Please log in to upvote')
   }
 
   const handleComment = () => {
-    axios.get(`http://localhost:8000/api/v1/tickets/${ticket.id}/comments`)
+    axios.get(`http://localhost:8000/api/v1/tickets/${ticket.id}/comments/`)
       .then(res => {
         console.log(res.data)
       })
   }
 
   const handleClaim = () => {
+    if (!token.length) alert('Please log in to claim ticket')
+    else setShowSMS(true)
+  }
 
-    console.log('claimed')
+  const handleCloseSMS = (e) => {
+    if (e.target.className === 'sms-modal' || e.target.id === 'sms-exit') setShowSMS(false)
   }
 
   const handleMouseOver = () => {
@@ -52,28 +72,49 @@ export default function Ticket({ ticket, signedIn }) {
     setTooltip(false)
   }
 
+  const handleUpdateUpvote = (id) => {
+    if (ticket.liked_by.indexOf(id) > -1) setUpvoted(true)
+  }
 
+  const updateTokenAndID = () => {
+    let token = window.localStorage.getItem('jwt')
+    let id = parseInt(window.localStorage.getItem('userID'))
+    setToken(token)
+    setUserID(id)
+    handleUpdateUpvote(id)
+    axios.defaults.headers.common['Authorization'] = token;
+  }
+
+  useEffect(() => {
+    handleResize()
+    updateTokenAndID()
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('click', handleCloseSMS)
+  }, [showSMS, token, userID])
 
   return (
-    <div className="ticket-wrapper">
-      <div className="avatar-wrapper">
-        <img src={ticket.author.avatar} alt="user avatar" className="avatar"></img>
-        </div>
-      <div className="content-wrapper">
-        <div className="header-wrapper">
-          <p className="profile-name">{ticket.author.first_name} {ticket.author.last_name}</p>
-          <span>{format(Date.parse(ticket.created_at))}</span>
-        </div>
-        <div className='body-wrapper'>
-          <p className="ticket-title">{ticket.title}</p>
-          <div className='icon-wrapper'>
-            <i className="material-icons md-dark favorite_border" onClick={handleUpvote} style={upvoted ? {color: '#E91E63'} : {}}>{upvoted ? 'favorite' : 'favorite_border'}</i>
-            <i className="material-icons md-dark chat" onClick={handleComment}>chat</i>
-            <i className="material-icons md-dark face" ref={claimIcon} onClick={handleClaim} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>smartphone</i>
-            {tooltip && <Tooltip top={tooltipTop} left={tooltipLeft}/>}
+    <>
+      {showSMS && <SMS handleCloseSMS={handleCloseSMS} ticketId={ticket.id}/>}
+      <div className="ticket-wrapper">
+        <div className="avatar-wrapper">
+          <img src={ticket.author.avatar} alt="user avatar" className="avatar"></img>
+          </div>
+        <div className="content-wrapper">
+          <div className="header-wrapper">
+            <p className="profile-name">{ticket.author.first_name} {ticket.author.last_name}</p>
+            <span>{format(Date.parse(ticket.created_at))}</span>
+          </div>
+          <div className='body-wrapper'>
+            <p className="ticket-title">{ticket.title}</p>
+            <div className='icon-wrapper'>
+              <i className="material-icons md-dark favorite-icon" onClick={handleUpvote} style={upvoted ? {color: '#E91E63'} : {}}>{upvoted ? 'favorite' : 'favorite_border'}</i>
+              <i className="material-icons md-dark chat-icon" onClick={handleComment}>chat</i>
+              <i className="material-icons md-dark phone-icon" ref={claimIcon} onClick={handleClaim} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>smartphone</i>
+              {tooltip && <Tooltip top={tooltipTop} left={tooltipLeft}/>}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

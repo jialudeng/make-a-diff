@@ -62,3 +62,15 @@
   transition: 0.2s;
   transition-timing-function: ease-in-out;
 }
+
+.favorite-icon:hover {
+  color: #E91E63;
+}
+
+.chat-icon:hover {
+  color: #26A69A;
+}
+
+.phone-icon:hover {
+  color: #AB47BC;
+}

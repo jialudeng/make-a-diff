@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
 
-export default function Login({ handleExitLogin, handleSetToken }) {
+export default function Login({ handleExitLogin, handleSetToken, handleSignedIn, handleSetUserID }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
+  const [userID, setUserID] = useState(null)
   
   const handleInputChange = (e) => {
     if (e.target.name === 'username') setUsername(e.target.value)
@@ -12,12 +14,18 @@ export default function Login({ handleExitLogin, handleSetToken }) {
   }
   
   const handleSubmitLogin = (e) => {
-    // add logic to exit the modal if token has been set
     e.preventDefault()
     if (username.length && password.length) {
       axios.post('http://localhost:8000/api/v1/auth/token/', {username, password})
-      .then(res => handleSetToken(res.data.token))
-      .catch(err => console.log(err))
+        .then(res => handleSetToken(res.data.token))
+        .then(() => {
+          axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('jwt');
+          axios.get('http://localhost:8000/api/v1/user/')
+            .then((res)=> handleSetUserID(res.data))
+            .catch(err => console.log(err))
+        })
+        .then(() => handleSignedIn())
+        .catch(err => console.log(err))
     }
   }
 
@@ -30,7 +38,7 @@ export default function Login({ handleExitLogin, handleSetToken }) {
           <h2>Log in to Make A Diff</h2>
         </div>
         <div className="login-modal-body">
-          <form>
+        <form>
             <input onChange={handleInputChange} type="text" name="username" placeholder="Username" autoComplete="off" required />
             <input onChange={handleInputChange} type="password" name="password" placeholder="Password" autoComplete="off" required/>
             <button onClick={handleSubmitLogin} id="login-submit"><strong>Log in</strong></button>
