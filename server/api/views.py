@@ -57,6 +57,8 @@ class TagView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TagSerializer
 
 class CommentListView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, ticket_id):
         ticket = Ticket.objects.get(id=ticket_id)
         comments = ticket.comments

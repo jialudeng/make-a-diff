@@ -12,6 +12,7 @@ class TagSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = UserSerializer()
     class Meta:
         model = Comment
         fields = '__all__'
@@ -26,7 +27,7 @@ class MultipartM2MField(serializers.Field):
 
 class TicketSerializer(serializers.ModelSerializer):
     author = UserSerializer()
-    tags = TagSerializer()
+    tags = MultipartM2MField()
     liked_by = MultipartM2MField()
 
     class Meta:

@@ -63,6 +63,10 @@
   transition-timing-function: ease-in-out;
 }
 
+i {
+  margin-right: 3px;
+}
+
 .favorite-icon:hover {
   color: #E91E63;
 }
@@ -73,4 +77,15 @@
 
 .phone-icon:hover {
   color: #AB47BC;
+}
+
+
+.individual-icon-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-stats {
+  font-size: 15px;
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css';
 import Login from '../Login/Login.js';
+import TicketForm from '../TicketForm/TicketForm.js';
 
 export default function Header({ handleSetToken, handleSetUserID }) {
   const [searchHighlight, setSearchHighlight] = useState(false)
@@ -8,6 +9,8 @@ export default function Header({ handleSetToken, handleSetUserID }) {
   const [showLogin, setShowLogin] = useState(false)
   
   const [signedIn, setSignedIn] = useState(false)
+
+  const [showTicket, setShowTicket] = useState(false)
 
   const handleHighlightSearch = () => {
     setSearchHighlight(true)
@@ -34,6 +37,14 @@ export default function Header({ handleSetToken, handleSetUserID }) {
     setSignedIn(true)
   }
 
+  const handleSubmitTicket = () => {
+    setShowTicket(true)
+  }
+
+  const handleCloseTicketForm = () => {
+    setShowTicket(false)
+  }
+
   useEffect(() => {
     if (window.localStorage.getItem('jwt')) handleSignedIn()
     window.addEventListener('click', handleClickWindow)
@@ -42,6 +53,7 @@ export default function Header({ handleSetToken, handleSetUserID }) {
   return (
     <>
     {showLogin && !signedIn && <Login handleExitLogin={handleExitLogin} handleSetToken={handleSetToken} handleSignedIn={handleSignedIn} handleSetUserID={handleSetUserID} />}
+    {showTicket && signedIn && <TicketForm handleCloseTicketForm={handleCloseTicketForm} />}
     <div className="top-wrapper">
       <div className="empty-header-space"></div>
       <div className="logo-search">
@@ -55,6 +67,11 @@ export default function Header({ handleSetToken, handleSetUserID }) {
         ? 
         <div className='profile-icon-wrapper'>
           <span className="material-icons" id="profile-logo">face</span>
+          <div className="dropdown-content">
+            <p>Profile</p>
+            <p onClick={handleSubmitTicket}>Submit a ticket</p>
+            <p>Contact us</p>
+          </div>
         </div> 
         : 
         <div className="button-wrapper">

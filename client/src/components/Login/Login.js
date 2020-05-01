@@ -4,9 +4,8 @@ import './Login.css';
 
 export default function Login({ handleExitLogin, handleSetToken, handleSignedIn, handleSetUserID }) {
   const [username, setUsername] = useState('')
+  
   const [password, setPassword] = useState('')
-
-  const [userID, setUserID] = useState(null)
   
   const handleInputChange = (e) => {
     if (e.target.name === 'username') setUsername(e.target.value)

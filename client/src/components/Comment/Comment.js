@@ -1,29 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './Comment.css'
+import React from 'react';
+import { format } from 'timeago.js';
+import './Comment.css';
 
-export default function Comment({ token, userID, ticketID }) {
-  const [comments, setComments] = useState([])
-
-  const handleUpdateComments = (comments) => {
-    setComments(comments)
-  } 
-
-  useEffect(() => {
-    axios.get(`http://localhost:8000/api/v1/tickets/${ticketID}/comments/`)
-      .then((res) => {
-        handleUpdateComments(res.data)
-      })
-      .catch(err => console.log(err))
-  }, [])
-
+export default function Commment({ comment }) {
   return (
-    <div className="comment-modal">
-      <div className="comment-modal-content">
-        <div className="comment-modal-header">
-          {comments.map((comment, index) => (<p key={index}>{comment.content}</p>))}
+    <>
+      <div className="comment-wrapper">
+        <div className="comment-content-wrapper">
+          <div className="comment-header-wrapper">
+            <p className="comment-author">{comment.author.first_name} {comment.author.last_name}</p>
+            <span className="comment-timeago">{format(Date.parse(comment.created_at))}</span>
+          </div>
+          <div className='comment-body-wrapper'>
+            <p className="comment-content">{comment.content}</p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

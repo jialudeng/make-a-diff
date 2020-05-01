@@ -1,0 +1,90 @@
+.comments-modal {
+  position: fixed; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(59,66,75,0.9)
+}
+
+.comments-modal-content {
+  position: relative;
+  background-color: #17202A;
+  margin: 5% auto 15% auto;
+  padding: 0;
+  border-radius: 10px;
+  width: 60%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+.comments-ticket-wrapper {
+  margin-top: 15px;
+  border: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.comments-ticket-avatar-wrapper {
+  display: flex;
+  padding: 15px;
+}
+
+.comment-ticket-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.comments-ticket-content-wrapper {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.comments-ticket-header-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 10px;
+  font-size: 17px;
+}
+
+.comments-ticket-body-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.comments-ticket-author {
+  font-size:20px;
+}
+
+.comments-ticket-title {
+  font-size: 20px;
+}
+
+#comments-exit {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  font-size: 25px;
+  font-weight: bold;
+  transition: ease-in-out 0.1s;
+}
+
+#comments-exit:hover {
+  cursor: pointer;
+  color: #EC407A;
+}

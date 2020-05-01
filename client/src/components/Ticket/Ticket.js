@@ -5,11 +5,10 @@ import { format } from 'timeago.js';
 import './Ticket.css';
 import Tooltip from './Tooltip.js';
 import SMS from '../SMS/SMS.js';
-import Comment from '../Comment/Comment.js';
+import CommentsModal from '../Comment/CommentsModal.js';
 
 
 export default function Ticket({ ticket }) {
-
   const claimIcon = useRef(null)
 
   const [token, setToken] = useState(null)
@@ -20,13 +19,13 @@ export default function Ticket({ ticket }) {
 
   const [tooltipLeft, setTooltipLeft] = useState(0)
 
-  const [upvoted, setUpvoted] = useState(false)
+  const [upvoted, setUpvoted] = useState(ticket.liked_by.indexOf(userID) > -1)
 
   const [tooltip, setTooltip] = useState(false)
 
   const [showSMS, setShowSMS] = useState(false)
 
-  const [showComment, setShowComment] = useState(false)
+  const [showComments, setShowComments] = useState(false)
 
   const handleResize = () => {
     setTooltipTop(claimIcon.current.offsetTop + claimIcon.current.clientHeight)
@@ -48,8 +47,8 @@ export default function Ticket({ ticket }) {
   }
 
   const handleComment = () => {
-    if (token && userID && !showComment) {
-      setShowComment(true)
+    if (token && userID && !showComments) {
+      setShowComments(true)
     }
   }
 
@@ -60,6 +59,10 @@ export default function Ticket({ ticket }) {
 
   const handleCloseSMS = (e) => {
     if (e.target.className === 'sms-modal' || e.target.id === 'sms-exit') setShowSMS(false)
+  }
+
+  const handleCloseCommentsModal = (e) => {
+    if (e.target.className === 'comments-modal' || e.target.id === 'comments-exit') setShowComments(false)
   }
 
   const handleMouseOver = () => {
@@ -88,12 +91,13 @@ export default function Ticket({ ticket }) {
     updateTokenAndID()
     window.addEventListener('resize', handleResize)
     window.addEventListener('click', handleCloseSMS)
-  }, [showSMS, token, userID])
+    window.addEventListener('click', handleCloseCommentsModal)
+  })
 
   return (
     <>
       {showSMS && <SMS handleCloseSMS={handleCloseSMS} ticketId={ticket.id}/>}
-      {showComment && <Comment token={token} userID={userID} ticketID={ticket.id} />}
+      {showComments && <CommentsModal ticket={ticket} token={token} userID={userID} handleCloseCommentsModal={handleCloseCommentsModal} />}
       <div className="ticket-wrapper">
         <div className="avatar-wrapper">
           <img src={ticket.author.avatar} alt="user avatar" className="avatar"></img>
@@ -103,12 +107,20 @@ export default function Ticket({ ticket }) {
             <p className="profile-name">{ticket.author.first_name} {ticket.author.last_name}</p>
             <span>{format(Date.parse(ticket.created_at))}</span>
           </div>
-          <div className='body-wrapper'>
+          <div className="body-wrapper">
             <p className="ticket-title">{ticket.title}</p>
-            <div className='icon-wrapper'>
-              <i className="material-icons md-dark favorite-icon" onClick={handleUpvote} style={upvoted ? {color: '#E91E63'} : {}}>{upvoted ? 'favorite' : 'favorite_border'}</i>
-              <i className="material-icons md-dark chat-icon" onClick={handleComment}>chat</i>
-              <i className="material-icons md-dark phone-icon" ref={claimIcon} onClick={handleClaim} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>smartphone</i>
+            <div className="icon-wrapper">
+              <div className="individual-icon-wrapper">
+                <i className="material-icons md-dark favorite-icon" onClick={handleUpvote} style={upvoted ? {color: '#E91E63'} : {}}>{upvoted ? 'favorite' : 'favorite_border'}</i>
+                <span className="ticket-stats">{ticket.liked_by.length}</span>
+              </div>
+              <div className="individual-icon-wrapper">
+                <i className="material-icons md-dark chat-icon" onClick={handleComment}>chat</i>
+                <span className="ticket-stats">{ticket.comments.length}</span>
+              </div>
+              <div className="individual-icon-wrapper">
+                <i className="material-icons md-dark phone-icon" ref={claimIcon} onClick={handleClaim} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>smartphone</i>
+              </div>
               {tooltip && <Tooltip top={tooltipTop} left={tooltipLeft}/>}
             </div>
           </div>

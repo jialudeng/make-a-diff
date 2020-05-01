@@ -24,7 +24,6 @@ class Ticket(models.Model):
     title = models.CharField(max_length=256)
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="ticket_author")
     tags = models.ManyToManyField(Tag, blank=True)
-    description = models.TextField(default=None, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated_at = models.DateTimeField(auto_now=True)
     claimed_by = models.ForeignKey(User, default=None, blank=True, null=True, on_delete=models.PROTECT, related_name="ticket_claimed_by")
@@ -32,7 +31,6 @@ class Ticket(models.Model):
     liked_by = models.ManyToManyField(User, blank=True)
     comments = models.ManyToManyField(Comment, blank=True)
     sms = models.TextField(default=None, blank=True, null=True)
-
 
     def tags_string(self):
         ass_tags = self.tags.all()
