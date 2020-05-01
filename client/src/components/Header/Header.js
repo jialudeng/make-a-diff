@@ -3,7 +3,7 @@ import './Header.css';
 import Login from '../Login/Login.js';
 import TicketForm from '../TicketForm/TicketForm.js';
 
-export default function Header({ handleSetToken, handleSetUserID }) {
+export default function Header({ handleSetToken, handleSetUserID, handleAddTicket }) {
   const [searchHighlight, setSearchHighlight] = useState(false)
 
   const [showLogin, setShowLogin] = useState(false)
@@ -41,19 +41,20 @@ export default function Header({ handleSetToken, handleSetUserID }) {
     setShowTicket(true)
   }
 
-  const handleCloseTicketForm = () => {
-    setShowTicket(false)
+  const handleCloseTicketForm = (e) => {
+    if (e.target.className === 'ticket-form-modal' || e.target.id === 'ticket-form-exit') setShowTicket(false)
   }
 
   useEffect(() => {
     if (window.localStorage.getItem('jwt')) handleSignedIn()
     window.addEventListener('click', handleClickWindow)
+    window.addEventListener('click', handleCloseTicketForm)
   }, [searchHighlight, showLogin])
 
   return (
     <>
     {showLogin && !signedIn && <Login handleExitLogin={handleExitLogin} handleSetToken={handleSetToken} handleSignedIn={handleSignedIn} handleSetUserID={handleSetUserID} />}
-    {showTicket && signedIn && <TicketForm handleCloseTicketForm={handleCloseTicketForm} />}
+    {showTicket && signedIn && <TicketForm handleAddTicket={handleAddTicket} handleCloseTicketForm={handleCloseTicketForm} />}
     <div className="top-wrapper">
       <div className="empty-header-space"></div>
       <div className="logo-search">

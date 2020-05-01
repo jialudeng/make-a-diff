@@ -27,6 +27,5 @@ urlpatterns = [
     path('v1/tags/<int:pk>/', api_views.TagView.as_view()),
     path('v1/tags/', api_views.TagListView.as_view()),
     path('v1/tickets/<int:ticket_id>/comments/', api_views.CommentListView. as_view()),
-    path('v1/tickets/<int:ticket_id>/comments/<int:pk>/', api_views.CommentView. as_view()),
-    path('v1/comments/<int:fk>/<int:pk>/', api_views.CommentView. as_view()),
+    path('v1/tickets/<int:ticket_id>/comments/<int:pk>/', api_views.CommentView. as_view())
 ]

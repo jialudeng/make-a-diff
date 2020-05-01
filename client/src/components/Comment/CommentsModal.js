@@ -8,13 +8,12 @@ export default function CommentsModal({ ticket, token, handleCloseCommentsModal 
   const [comments, setComments] = useState([])
 
   useEffect(() => {
-    axios.defaults.headers.common['Authorization'] = token;
-    axios.get(`http://localhost:8000/api/v1/tickets/${ticket.id}/comments/`)
+    axios.get(`http://localhost:8000/api/v1/tickets/${ticket.id}/comments/`, {headers: {Authorization: token}})
       .then((res) => {
         setComments(res.data)
       })
       .catch(err => console.log(err))
-  })
+  }, [ticket, token])
 
   return (
     <div className="comments-modal">

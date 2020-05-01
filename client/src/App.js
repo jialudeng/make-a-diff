@@ -22,7 +22,7 @@ export default function App() {
   const updateTicket = () => {
     axios.get('http://localhost:8000/api/v1/tickets/')
     .then(res => {
-      setTickets(res.data)  
+      setTickets(res.data.reverse())  
     })
   }
 
@@ -33,7 +33,7 @@ export default function App() {
   return (
     <div className="App">
       <div className='header'>
-        <Header handleSetToken={handleSetToken} handleSetUserID={handleSetUserID}/>
+        <Header handleSetToken={handleSetToken} handleSetUserID={handleSetUserID} handleAddTicket={updateTicket} />
       </div>
       <div className="board">
         {tickets.map((ticket, index) => (<Ticket key={index} ticket={ticket} userID={userID} />))}

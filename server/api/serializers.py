@@ -26,7 +26,8 @@ class MultipartM2MField(serializers.Field):
         return data.split(',') if data else None
 
 class TicketSerializer(serializers.ModelSerializer):
-    author = UserSerializer()
+    author = UserSerializer(read_only=True)
+    author_id = serializers.IntegerField(write_only=True)
     tags = MultipartM2MField()
     liked_by = MultipartM2MField()
 

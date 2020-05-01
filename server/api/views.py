@@ -4,7 +4,7 @@ from api.serializers import TicketSerializer, TagSerializer, CommentSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from twilio.rest import Client
 from api.config.twilio import TWILIO_account_sid, TWILIO_auth_token, TWILIO_phone
@@ -16,6 +16,8 @@ class UserProfileView(APIView):
         return Response(request.user.id)
 
 class TicketListView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
 
