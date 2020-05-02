@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css';
 import Login from '../Login/Login.js';
-import TicketForm from '../TicketForm/TicketForm.js';
 
-export default function Header({ handleSetToken, handleSetUserID, handleAddTicket }) {
+export default function Header({ handleSetToken, handleSetUser }) {
   const [searchHighlight, setSearchHighlight] = useState(false)
 
   const [showLogin, setShowLogin] = useState(false)
   
   const [signedIn, setSignedIn] = useState(false)
-
-  const [showTicket, setShowTicket] = useState(false)
 
   const handleHighlightSearch = () => {
     setSearchHighlight(true)
@@ -37,24 +34,15 @@ export default function Header({ handleSetToken, handleSetUserID, handleAddTicke
     setSignedIn(true)
   }
 
-  const handleSubmitTicket = () => {
-    setShowTicket(true)
-  }
-
-  const handleCloseTicketForm = (e) => {
-    if (e.target.className === 'ticket-form-modal' || e.target.id === 'ticket-form-exit') setShowTicket(false)
-  }
-
   useEffect(() => {
     if (window.localStorage.getItem('jwt')) handleSignedIn()
     window.addEventListener('click', handleClickWindow)
-    window.addEventListener('click', handleCloseTicketForm)
+
   }, [searchHighlight, showLogin])
 
   return (
     <>
-    {showLogin && !signedIn && <Login handleExitLogin={handleExitLogin} handleSetToken={handleSetToken} handleSignedIn={handleSignedIn} handleSetUserID={handleSetUserID} />}
-    {showTicket && signedIn && <TicketForm handleAddTicket={handleAddTicket} handleCloseTicketForm={handleCloseTicketForm} />}
+    {showLogin && !signedIn && <Login handleExitLogin={handleExitLogin} handleSetToken={handleSetToken} handleSignedIn={handleSignedIn} handleSetUser={handleSetUser} />}
     <div className="top-wrapper">
       <div className="empty-header-space"></div>
       <div className="logo-search">
@@ -65,21 +53,13 @@ export default function Header({ handleSetToken, handleSetUserID, handleAddTicke
         </div>
       </div>
       {signedIn 
-        ? 
-        <div className='profile-icon-wrapper'>
-          <span className="material-icons" id="profile-logo">face</span>
-          <div className="dropdown-content">
-            <p>Profile</p>
-            <p onClick={handleSubmitTicket}>Submit a ticket</p>
-            <p>Contact us</p>
-          </div>
-        </div> 
-        : 
+        ?
+        <div className="empty-header-space"></div>
+        :
         <div className="button-wrapper">
-        <div id="login-btn" onClick={handleClickLogin}><strong>Log In</strong></div>
-        <div id="signup-btn" onClick={handleClickSignup}>Sign Up</div>
-      </div>
-      
+          <div id="login-btn" onClick={handleClickLogin}><strong>Log In</strong></div>
+          <div id="signup-btn" onClick={handleClickSignup}>Sign Up</div>
+        </div>
       }
 
     </div>

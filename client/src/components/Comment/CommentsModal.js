@@ -4,7 +4,7 @@ import axios from 'axios';
 import Comment from './Comment.js';
 import './CommentsModal.css'
 
-export default function CommentsModal({ ticket, token, handleCloseCommentsModal }) {
+export default function CommentsModal({ ticket, token, handleCloseModal }) {
   const [comments, setComments] = useState([])
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function CommentsModal({ ticket, token, handleCloseCommentsModal 
     <div className="comments-modal">
       <div className="comments-modal-content">
         <div className="comments-modal-header">
-          <span className="material-icons" id="comments-exit" onClick={handleCloseCommentsModal}>cancel</span>
+          <span className="material-icons" id="comments-exit" onClick={handleCloseModal}>cancel</span>
           <div className="comments-ticket-wrapper">
             <div className="comments-ticket-avatar-wrapper">
               <img src={ticket.author.avatar} alt="user avatar" className="comment-ticket-avatar"></img>

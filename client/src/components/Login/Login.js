@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
 
-export default function Login({ handleExitLogin, handleSetToken, handleSignedIn, handleSetUserID }) {
+export default function Login({ handleExitLogin, handleSetToken, handleSignedIn, handleSetUser }) {
   const [username, setUsername] = useState('')
   
   const [password, setPassword] = useState('')
@@ -20,7 +20,7 @@ export default function Login({ handleExitLogin, handleSetToken, handleSignedIn,
         .then(() => {
           axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('jwt');
           axios.get('http://localhost:8000/api/v1/user/')
-            .then((res)=> handleSetUserID(res.data))
+            .then((res)=> handleSetUser(res.data))
             .catch(err => console.log(err))
         })
         .then(() => handleSignedIn())

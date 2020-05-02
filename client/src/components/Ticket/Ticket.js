@@ -19,7 +19,7 @@ export default function Ticket({ ticket }) {
 
   const [tooltipLeft, setTooltipLeft] = useState(0)
 
-  const [upvoted, setUpvoted] = useState(ticket.liked_by.indexOf(userID) > -1)
+  const [upvoted, setUpvoted] = useState(false)
 
   const [tooltip, setTooltip] = useState(false)
 
@@ -47,7 +47,7 @@ export default function Ticket({ ticket }) {
   }
 
   const handleComment = () => {
-    if (token && userID && !showComments) {
+    if (token && userID && ticket.comments.length > 0) {
       setShowComments(true)
     }
   }
@@ -57,11 +57,8 @@ export default function Ticket({ ticket }) {
     else setShowSMS(true)
   }
 
-  const handleCloseSMS = (e) => {
+  const handleCloseModal = (e) => {
     if (e.target.className === 'sms-modal' || e.target.id === 'sms-exit') setShowSMS(false)
-  }
-
-  const handleCloseCommentsModal = (e) => {
     if (e.target.className === 'comments-modal' || e.target.id === 'comments-exit') setShowComments(false)
   }
 
@@ -75,6 +72,7 @@ export default function Ticket({ ticket }) {
 
   const handleUpdateUpvote = (id) => {
     if (ticket.liked_by.indexOf(id) > -1) setUpvoted(true)
+    else setUpvoted(false)
   }
 
   const updateTokenAndID = () => {
@@ -90,14 +88,13 @@ export default function Ticket({ ticket }) {
     handleResize()
     updateTokenAndID()
     window.addEventListener('resize', handleResize)
-    window.addEventListener('click', handleCloseSMS)
-    window.addEventListener('click', handleCloseCommentsModal)
+    window.addEventListener('click', handleCloseModal)
   })
 
   return (
     <>
-      {showSMS && <SMS handleCloseSMS={handleCloseSMS} ticketId={ticket.id}/>}
-      {showComments && <CommentsModal ticket={ticket} token={token} userID={userID} handleCloseCommentsModal={handleCloseCommentsModal} />}
+      {showSMS && <SMS handleCloseModal={handleCloseModal} ticketId={ticket.id}/>}
+      {showComments && <CommentsModal ticket={ticket} token={token} userID={userID} handleCloseModal={handleCloseModal} />}
       <div className="ticket-wrapper">
         <div className="avatar-wrapper">
           <img src={ticket.author.avatar} alt="user avatar" className="avatar"></img>

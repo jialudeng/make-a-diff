@@ -1,0 +1,34 @@
+.sidebar-wrapper {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  color: #FFFFFF;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 20px 0;
+}
+
+.directory-container {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 10px;
+  /* background-color: crimson; */
+  border-radius: 50px;
+}
+
+.directory-container:hover {
+  cursor: pointer;
+  background-color: #1D2D3E;
+  color: #4D9FEC;
+}
+
+.sidebar-icon {
+  font-size: 28px;
+  margin-right: 10px;
+}
+
+.directory {
+  font-size: 25px;
+  font-weight: 800;
+}

@@ -13,7 +13,7 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        return Response(request.user.id)
+        return Response([request.user.id, request.user.avatar])
 
 class TicketListView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]

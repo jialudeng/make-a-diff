@@ -56,6 +56,11 @@
   justify-content: space-between;
 }
 
+.individual-icon-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .icon-wrapper > *:hover {
   cursor: pointer;
   transform: scale(1.2, 1.2);
@@ -79,13 +84,7 @@ i {
   color: #AB47BC;
 }
 
-
-.individual-icon-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .ticket-stats {
+  width: 5px;
   font-size: 15px;
 }
