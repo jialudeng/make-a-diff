@@ -4,7 +4,7 @@ import './App.css';
 import Header from './components/Header/Header.js';
 import Ticket from './components/Ticket/Ticket.js';
 import Sidebar from './components/Sidebar/Sidebar.js';
-import TicketForm from './components/TicketForm/TicketForm';
+import Home from './components/Home/Home.js';
 
 export default function App() {
   const [tickets, setTickets] = useState([])
@@ -13,6 +13,8 @@ export default function App() {
 
   const [userAvatar, setUserAvatar] = useState(null)
 
+  const [view, setView] = useState('home')
+
   const handleSetToken = (token) => {
     window.localStorage.setItem('jwt', `Token ${token}`)
   }
@@ -20,14 +22,15 @@ export default function App() {
   const handleSetUser = ([id, avatar]) => {
     window.localStorage.setItem('userID', id)
     setUserID(id)
-    console.log(id)
     setUserAvatar(avatar)
     updateTicket()
   }
 
   const getAuthStatus = () => {
     let id = window.localStorage.getItem('userID')
-    if (id) setUserID(id)
+    let avatar = window.localStorage.getItem('userAvatar')
+    if (id) setUserID(parseInt(id))
+    if (avatar) setUserAvatar(avatar)
   }
 
   const updateTicket = () => {
@@ -35,6 +38,10 @@ export default function App() {
     .then(res => {
       setTickets(res.data.reverse())  
     })
+  }
+
+  const handleSetView = (selected) => {
+    setView(selected)
   }
 
   useEffect(() => {
@@ -45,22 +52,20 @@ export default function App() {
   return (
     <div className="App">
       <div className="header">
-        <Header handleSetToken={handleSetToken} handleSetUser={handleSetUser} handleAddTicket={updateTicket} />
+        <Header handleSetToken={handleSetToken} handleSetUser={handleSetUser}  />
       </div>
       <div className="body">
         <div className="left-body">
-          {userID && <Sidebar />}
+          {userID && <Sidebar handleSetView={handleSetView} view={view} />}
         </div>
-        {userID
-        ? 
-        <div className="form">
-          <TicketForm userAvatar={userAvatar} />
-        </div>
-        :
-        <div className="board">
-          {tickets.map((ticket, index) => (<Ticket key={index} ticket={ticket} userID={userID} />))}
-        </div>
-        }
+          <div className="board">
+            {userID && view === 'home' && <Home userAvatar={userAvatar} handleAddTicket={updateTicket} tickets={tickets.filter(ticket => ticket.author.id === userID)} userID={userID} updateTicket={updateTicket} />}
+            {(!userID || view === 'explore') && 
+              <>
+                {tickets.map((ticket, index) => (<Ticket key={index} ticket={ticket} userID={userID} />))}
+              </>
+            }
+          </div>
       </div>
     </div>
   );

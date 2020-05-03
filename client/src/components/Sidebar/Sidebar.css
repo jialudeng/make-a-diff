@@ -13,7 +13,6 @@
   align-items: center;
   padding: 10px 15px;
   margin: 10px;
-  /* background-color: crimson; */
   border-radius: 50px;
 }
 
@@ -24,11 +23,11 @@
 }
 
 .sidebar-icon {
-  font-size: 28px;
+  font-size: 23px;
   margin-right: 10px;
 }
 
 .directory {
-  font-size: 25px;
+  font-size: 21px;
   font-weight: 800;
 }

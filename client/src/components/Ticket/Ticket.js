@@ -47,7 +47,7 @@ export default function Ticket({ ticket }) {
   }
 
   const handleComment = () => {
-    if (token && userID && ticket.comments.length > 0) {
+    if (token && userID) {
       setShowComments(true)
     }
   }

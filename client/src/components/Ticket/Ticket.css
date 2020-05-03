@@ -1,6 +1,5 @@
 .ticket-wrapper {
-  border: #757575 solid 1px;
-  border-bottom: none;
+  border-bottom: #283340 solid 0.2em;
   display: flex;
   flex-direction: row;
   width: 600px;
@@ -12,7 +11,7 @@
 }
 
 .ticket-wrapper:last-child {
-  border-bottom: #757575 solid 1px;
+  border-bottom: #283340 solid 0.2em;
 }
 
 .avatar-wrapper {

@@ -1,5 +1,6 @@
 .comment-wrapper {
-  border-top: #757575 solid 1px;
+  border: #283340 solid 0.2em;
+  margin: 15px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -27,7 +27,7 @@
 }
 
 .comments-ticket-wrapper {
-  margin-top: 15px;
+  margin: 15px;
   border: none;
   display: flex;
   flex-direction: row;
@@ -88,3 +88,4 @@
   cursor: pointer;
   color: #EC407A;
 }
+

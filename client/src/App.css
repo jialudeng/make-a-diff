@@ -7,8 +7,8 @@
 
 .header {
   position: relative;
-  border-bottom: #9297A2 solid 1px;
-  height: 60px;
+  border-bottom: #283340 solid 0.2em;
+  height: 70px;
   width: 100%;
   background-color: rgb(21, 32, 43);
   display: flex;
@@ -16,25 +16,24 @@
   justify-content: center;
 }
 
+.body {
+  display: flex;
+}
+
 .left-body {
-  left: 600px;
   width: 600px;
   height: 100vh;
   left: 0;
   display: flex;
   justify-content: flex-end;
-  border-right: #9297A2 solid 1px;
-}
-
-.form {
-  left: 600px;
 }
 
 .board {
+  border-left: #283340 solid 0.2em;
+  border-right: #283340 solid 0.2em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  color: white;
-  left: 600px;
+  color: #FFFFFF;
 }
