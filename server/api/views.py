@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from api.models import Ticket, Tag, Comment
 from api.serializers import TicketSerializer, TagSerializer, CommentSerializer
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from twilio.rest import Client
 from api.config.twilio import TWILIO_account_sid, TWILIO_auth_token, TWILIO_phone
+import json 
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
@@ -66,6 +67,19 @@ class CommentListView(APIView):
         comments = ticket.comments
         serialized_comments = CommentSerializer(comments, many=True)
         return Response(serialized_comments.data)
+    
+    def post(self, request, ticket_id):
+        ticket = Ticket.objects.get(id=ticket_id)
+        res = json.loads(request.body) 
+        serialized_comment = CommentSerializer(data=res)
+        if serialized_comment.is_valid():
+            new_comment = serialized_comment.save()
+            ticket.comments.add(new_comment)
+            ticket.save()
+            return Response(serialized_comment.data)
+        else:
+            return Response(serialized_comment.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 
 class CommentView(generics.RetrieveUpdateDestroyAPIView):
