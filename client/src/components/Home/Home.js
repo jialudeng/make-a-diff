@@ -4,7 +4,7 @@ import axios from 'axios';
 import './Home.css';
 import Ticket from '../Ticket/Ticket.js';
 
-export default function Home({ userAvatar, handleAddTicket, tickets, userID, updateTicket }) {
+export default function Home({ userAvatar, tickets, userID, updateTicket }) {
   const [tags, setTags] = useState([])
   
   const [title, setTitle] = useState('')

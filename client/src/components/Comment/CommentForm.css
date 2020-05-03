@@ -1,4 +1,46 @@
 .comment-form-wrapper {
   margin: 15px;
-  border-bottom: #283340 solid 0.2em;
+  border-top: #283340 solid 0.2em;
+}
+
+.comment-form-body {
+  /* padding: 2px 16px; */
+  margin-top: 10px;
+}
+
+textarea[name=comment] {
+  border-bottom: #757575 1px solid;
+  color: #FFFFFF;
+  background-color: #1C2733;
+  width: 100%;
+  padding: 20px 20px;
+  margin: 12px 0;
+  display: inline-block;
+  border: none;
+  border-bottom: #757575 solid 1px;
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+textarea[name=sms]:focus {
+  border-bottom: #1DA1F2 1px solid;
+}
+
+#comment-submit {
+  background-color: rgb(29, 161, 242);
+  border-radius: 50px;
+  padding: 14px 20px;
+  margin: 12px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  color: white;
+  font-size: 25px;
+  font-weight: 800;
+  text-align: center;
+  transition: ease-in-out 0.1s;
+}
+
+#comment-submit:hover {
+  background-color: rgb(26, 145, 218);
 }

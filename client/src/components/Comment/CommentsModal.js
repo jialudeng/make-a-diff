@@ -5,7 +5,7 @@ import Comment from './Comment.js';
 import CommentForm from './CommentForm.js';
 import './CommentsModal.css'
 
-export default function CommentsModal({ ticket, token, handleCloseModal }) {
+export default function CommentsModal({ ticket, token, handleCloseModal, userID }) {
   const [comments, setComments] = useState([])
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function CommentsModal({ ticket, token, handleCloseModal }) {
           </div>
         </div>
         {comments.map((comment, index) => (<Comment comment={comment} key={index} />))}
-        <CommentForm />
+        <CommentForm ticket={ticket} token={token} userID={userID}/>
       </div>
     </div>
   )
