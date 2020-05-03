@@ -44,6 +44,7 @@ export default function App() {
     setView(selected)
   }
 
+
   useEffect(() => {
     getAuthStatus()
     updateTicket()
@@ -62,7 +63,7 @@ export default function App() {
             {userID && view === 'home' && <Home userAvatar={userAvatar} handleAddTicket={updateTicket} tickets={tickets.filter(ticket => ticket.author.id === userID)} userID={userID} updateTicket={updateTicket} />}
             {(!userID || view === 'explore') && 
               <>
-                {tickets.map((ticket, index) => (<Ticket key={index} ticket={ticket} userID={userID} />))}
+                {tickets.map((ticket, index) => (<Ticket key={index} ticket={ticket} userID={userID}/>))}
               </>
             }
           </div>

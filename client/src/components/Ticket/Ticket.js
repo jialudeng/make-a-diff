@@ -62,6 +62,10 @@ export default function Ticket({ ticket }) {
     if (e.target.className === 'comments-modal' || e.target.id === 'comments-exit') setShowComments(false)
   }
 
+  const handleCloseSms = () => {
+    setShowSMS(false)
+  }
+
   const handleMouseOver = () => {
     setTooltip(true)
   }
@@ -84,17 +88,21 @@ export default function Ticket({ ticket }) {
     axios.defaults.headers.common['Authorization'] = token;
   }
 
+  const handleUpdateComment = (comment) => {
+    ticket.comments.push(comment)
+  }
+
   useEffect(() => {
     handleResize()
     updateTokenAndID()
     window.addEventListener('resize', handleResize)
     window.addEventListener('click', handleCloseModal)
-  })
+  }, [ticket])
 
   return (
     <>
-      {showSMS && <SMS handleCloseModal={handleCloseModal} ticketId={ticket.id}/>}
-      {showComments && <CommentsModal ticket={ticket} token={token} userID={userID} handleCloseModal={handleCloseModal} />}
+      {showSMS && <SMS handleCloseModal={handleCloseModal} ticketId={ticket.id} handleCloseSms={handleCloseSms}/>}
+      {showComments && <CommentsModal ticket={ticket} token={token} userID={userID} handleCloseModal={handleCloseModal} handleUpdateComment={handleUpdateComment}/>}
       <div className="ticket-wrapper">
         <div className="avatar-wrapper">
           <img src={ticket.author.avatar} alt="user avatar" className="avatar"></img>

@@ -5,8 +5,14 @@ import Comment from './Comment.js';
 import CommentForm from './CommentForm.js';
 import './CommentsModal.css'
 
-export default function CommentsModal({ ticket, token, handleCloseModal, userID }) {
+export default function CommentsModal({ ticket, token, handleCloseModal, userID, handleUpdateComment }) {
   const [comments, setComments] = useState([])
+
+  const handleAddComment = (comment) => {
+    let updated = comments.concat([comment])
+    setComments(updated)
+    handleUpdateComment(updated)
+  }
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/v1/tickets/${ticket.id}/comments/`, {headers: {Authorization: token}})
@@ -36,7 +42,7 @@ export default function CommentsModal({ ticket, token, handleCloseModal, userID 
           </div>
         </div>
         {comments.map((comment, index) => (<Comment comment={comment} key={index} />))}
-        <CommentForm ticket={ticket} token={token} userID={userID}/>
+        <CommentForm ticket={ticket} token={token} userID={userID} handleAddComment={handleAddComment}/>
       </div>
     </div>
   )

@@ -27,7 +27,7 @@ textarea[name=sms]:focus {
 }
 
 #comment-submit {
-  background-color: rgb(29, 161, 242);
+  background-color: rgb(26, 145, 218);
   border-radius: 50px;
   padding: 14px 20px;
   margin: 12px 0;
@@ -41,6 +41,11 @@ textarea[name=sms]:focus {
   transition: ease-in-out 0.1s;
 }
 
-#comment-submit:hover {
-  background-color: rgb(26, 145, 218);
+#comment-submit:disabled {
+  background-color: #325F8B;
+  cursor: initial;
+}
+
+#comment-submit:enabled:hover {
+  background-color: #325F8B;
 }

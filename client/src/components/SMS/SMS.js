@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './SMS.css';
 
-export default function SMS({ handleCloseModal, ticketId }) {
+export default function SMS({ handleCloseModal, ticketId, handleCloseSms }) {
   const [sms, setSms] = useState('')
 
   const handleSMSchange = (e) => {
@@ -13,8 +13,10 @@ export default function SMS({ handleCloseModal, ticketId }) {
     e.preventDefault()
     if (sms.length) {
       axios.patch(`http://localhost:8000/api/v2/tickets/${ticketId}/`, {sms}, {headers: {Authorization: window.localStorage.getItem('jwt')}})
-        // consider adding a success/failure badge  
-        .then(res => console.log(res.data))
+        .then(() => {
+          setSms('')
+          handleCloseSms()
+        })
         .catch(err => console.log(err))
     }
   }
