@@ -146,3 +146,5 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'api.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+django_heroku.settings(locals())
