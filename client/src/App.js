@@ -43,6 +43,9 @@ export default function App() {
 
   const handleSetView = (selected) => {
     setView(selected)
+    if (selected === 'notifications') alert('Notifications function is under construction. Please stay tuned and check back soon!')
+    if (selected === 'messages') alert('Messages function is under construction. Please stay tuned and check back soon!')
+    if (selected === 'profile') alert('Profile function is under construction. Please stay tuned and check back soon!')
   }
 
 

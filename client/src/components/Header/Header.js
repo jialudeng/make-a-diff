@@ -9,8 +9,14 @@ export default function Header({ handleSetToken, handleSetUser }) {
   
   const [signedIn, setSignedIn] = useState(false)
 
+  const [search, setSearch] = useState('')
+
   const handleHighlightSearch = () => {
     setSearchHighlight(true)
+  }
+
+  const handleSearchInput = (e) => {
+    setSearch(e.target.value)
   }
 
   const handleClickWindow = (e) => {
@@ -23,7 +29,7 @@ export default function Header({ handleSetToken, handleSetUser }) {
   }
 
   const handleClickSignup = () => {
-    console.log('signup')
+    alert('Sign Up function is under construction. Please stay tuned and check back soon!')
   }
 
   const handleExitLogin = () => {
@@ -34,10 +40,16 @@ export default function Header({ handleSetToken, handleSetUser }) {
     setSignedIn(true)
   }
 
+  const handleSearch = (e) => {
+    if (e.keyCode === 13) {
+      alert('Sign Up function is under construction. Please stay tuned and check back soon!')
+      setSearch('')
+    }
+  }
+
   useEffect(() => {
     if (window.localStorage.getItem('jwt')) handleSignedIn()
-    window.addEventListener('click', handleClickWindow)
-
+    document.addEventListener('click', handleClickWindow)
   }, [searchHighlight, showLogin])
 
   return (
@@ -49,7 +61,7 @@ export default function Header({ handleSetToken, handleSetUser }) {
         <span className="material-icons" id="header-logo">whatshot</span>
         <div className="search-wrapper" style={searchHighlight ? {border: '#1DA1F2 1px solid'} : {}}>
           <span className="material-icons" id="search-icon" style={searchHighlight ? {color:'#1DA1F2'} : {}}>search</span>
-          <input type="text" placeholder="Search Ticket" id="search" onClick={handleHighlightSearch}/>
+          <input type="text" placeholder="Search Ticket" id="search" onClick={handleHighlightSearch} onChange={handleSearchInput} onKeyDown={handleSearch} value={search} />
         </div>
       </div>
       {signedIn 
