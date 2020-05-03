@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../utils/API';
 import { format } from 'timeago.js';
 
 import './Ticket.css';
@@ -36,12 +36,12 @@ export default function Ticket({ ticket }) {
     if (token && userID && !upvoted) {
       setUpvoted(true)
       ticket.liked_by.push(userID)
-      axios.patch(`http://localhost:8000/api/v1/tickets/${ticket.id}/`, {liked_by: `${ticket.liked_by}`})
+      axios.patch(`api/v1/tickets/${ticket.id}/`, {liked_by: `${ticket.liked_by}`})
         .catch(err => console.log(err))
     } else if (token && userID && upvoted) {
         setUpvoted(false)
         ticket.liked_by.splice(ticket.liked_by.indexOf(userID), 1)
-        axios.patch(`http://localhost:8000/api/v1/tickets/${ticket.id}/`, {liked_by: `${ticket.liked_by.length > 0 ? ticket.liked_by : ','}`})
+        axios.patch(`api/v1/tickets/${ticket.id}/`, {liked_by: `${ticket.liked_by.length > 0 ? ticket.liked_by : ','}`})
           .catch(err => console.log(err))
     } else alert('Please log in to upvote')
   }
@@ -97,7 +97,7 @@ export default function Ticket({ ticket }) {
     updateTokenAndID()
     window.addEventListener('resize', handleResize)
     window.addEventListener('click', handleCloseModal)
-  }, [ticket])
+  })
 
   return (
     <>

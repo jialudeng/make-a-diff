@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/API';
 import './SMS.css';
 
 export default function SMS({ handleCloseModal, ticketId, handleCloseSms }) {
@@ -12,7 +12,7 @@ export default function SMS({ handleCloseModal, ticketId, handleCloseSms }) {
   const handleSendSMS = (e) => {
     e.preventDefault()
     if (sms.length) {
-      axios.patch(`http://localhost:8000/api/v2/tickets/${ticketId}/`, {sms}, {headers: {Authorization: window.localStorage.getItem('jwt')}})
+      axios.patch(`api/v2/tickets/${ticketId}/`, {sms}, {headers: {Authorization: window.localStorage.getItem('jwt')}})
         .then(() => {
           setSms('')
           handleCloseSms()

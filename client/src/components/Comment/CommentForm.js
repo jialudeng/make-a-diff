@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/API';
 import './CommentForm.css';
 
 export default function CommentForm({ ticket, token, userID, handleAddComment }) {
@@ -12,7 +12,7 @@ export default function CommentForm({ ticket, token, userID, handleAddComment })
   const handleSubmitComment = (e) => {
     e.preventDefault()
     if (content.length) {
-      axios.post(`http://localhost:8000/api/v1/tickets/${ticket.id}/comments/`, {author_id: userID, content}, {headers: {Authorization: token}})
+      axios.post(`api/v1/tickets/${ticket.id}/comments/`, {author_id: userID, content}, {headers: {Authorization: token}})
         .then(res => {
           handleAddComment(res.data)
           setContent('')

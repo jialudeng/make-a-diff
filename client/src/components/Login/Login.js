@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/API';
 import './Login.css';
 
 export default function Login({ handleExitLogin, handleSetToken, handleSignedIn, handleSetUser }) {
@@ -15,11 +15,13 @@ export default function Login({ handleExitLogin, handleSetToken, handleSignedIn,
   const handleSubmitLogin = (e) => {
     e.preventDefault()
     if (username.length && password.length) {
-      axios.post('http://localhost:8000/api/v1/auth/token/', {username, password})
-        .then(res => handleSetToken(res.data.token))
+      axios.post('api/v1/auth/token/', {username, password})
+        .then(res => {
+          handleSetToken(res.data.token)
+        })
         .then(() => {
           axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('jwt');
-          axios.get('http://localhost:8000/api/v1/user/')
+          axios.get('api/v1/user/')
             .then((res)=> handleSetUser(res.data))
             .catch(err => console.log(err))
         })

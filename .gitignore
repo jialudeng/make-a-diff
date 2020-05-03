@@ -159,4 +159,4 @@ dmypy.json
 venv/
 
 #config
-config/
+keysrc

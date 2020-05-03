@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import axios from 'axios';
+import axios from '../../utils/API';
 import './Home.css';
 import Ticket from '../Ticket/Ticket.js';
 
@@ -19,7 +19,7 @@ export default function Home({ userAvatar, tickets, userID, updateTicket }) {
   const handleSubmitTicket = (e) => {
     e.preventDefault()
     if (title.length && tag) {
-      axios.post('http://localhost:8000/api/v1/tickets/', {title, tags: tag, author_id: window.localStorage.getItem('userID'), liked_by: ','}, {headers: {Authorization: window.localStorage.getItem('jwt')}})
+      axios.post('api/v1/tickets/', {title, tags: tag, author_id: window.localStorage.getItem('userID'), liked_by: ','}, {headers: {Authorization: window.localStorage.getItem('jwt')}})
         .then(() => {
           updateTicket()
           setTitle('')
@@ -30,7 +30,7 @@ export default function Home({ userAvatar, tickets, userID, updateTicket }) {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/v1/tags/', {headers: {Authorization: window.localStorage.getItem('userID')}})
+    axios.get('api/v1/tags/', {headers: {Authorization: window.localStorage.getItem('userID')}})
       .then((res) => setTags(res.data))
   }, [])
 

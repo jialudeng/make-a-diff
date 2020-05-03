@@ -10,7 +10,7 @@ class User(AbstractUser):
 
 class Tag(models.Model):
     def __str__(self):
-        return self.name
+        return self.label
     label = models.CharField(max_length=64)
     created_at = models.DateTimeField(auto_now_add=True)
 

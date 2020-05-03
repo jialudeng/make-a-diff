@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from './utils/API.js';
 import './App.css';
 import Header from './components/Header/Header.js';
 import Ticket from './components/Ticket/Ticket.js';
@@ -8,6 +8,7 @@ import Home from './components/Home/Home.js';
 
 export default function App() {
   const [tickets, setTickets] = useState([])
+
 
   const [userID, setUserID] = useState(null)
 
@@ -34,7 +35,7 @@ export default function App() {
   }
 
   const updateTicket = () => {
-    axios.get('http://localhost:8000/api/v1/tickets/')
+    axios.get('api/v1/tickets/')
     .then(res => {
       setTickets(res.data.reverse())  
     })

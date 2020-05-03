@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../utils/API';
 
 import Comment from './Comment.js';
 import CommentForm from './CommentForm.js';
@@ -15,7 +15,7 @@ export default function CommentsModal({ ticket, token, handleCloseModal, userID,
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/v1/tickets/${ticket.id}/comments/`, {headers: {Authorization: token}})
+    axios.get(`api/v1/tickets/${ticket.id}/comments/`, {headers: {Authorization: token}})
       .then((res) => {
         setComments(res.data)
       })
