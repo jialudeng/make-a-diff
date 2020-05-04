@@ -10,7 +10,7 @@ Username: guest_poodle
 
 Password: demopassword
 
-<img src="https://imgur.com/a/M8DPGc9" width="500">
+<img src="https://i.imgur.com/azDbbg0.png" width="500">
 
 ## Getting Started
 
