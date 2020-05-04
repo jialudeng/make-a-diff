@@ -10,7 +10,8 @@ Username: guest_poodle
 
 Password: demopassword
 
-<img src="https://i.imgur.com/azDbbg0.png" width="500">
+<a href="https://www.youtube.com/watch?v=485dKpng86I" target="_blank"><img src="https://i.imgur.com/azDbbg0.png" 
+alt="App Demo Video" width="500" border="10" /></a>
 
 ## Getting Started
 
