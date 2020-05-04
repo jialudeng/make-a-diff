@@ -4,7 +4,7 @@ import axios from '../../utils/API';
 import './Home.css';
 import Ticket from '../Ticket/Ticket.js';
 
-export default function Home({ userAvatar, tickets, userID, updateTicket }) {
+export default function Home({ tickets, userID, updateTicket }) {
   const [tags, setTags] = useState([])
   
   const [title, setTitle] = useState('')
@@ -39,7 +39,7 @@ export default function Home({ userAvatar, tickets, userID, updateTicket }) {
     <>
     <div className="form-wrapper">
       <div className="form-avatar-wrapper">
-        <img src={userAvatar} alt="user avatar" className="avatar"></img>
+        <img src={window.localStorage.getItem('userAvatar')} alt="user avatar" className="avatar"></img>
       </div>
       <div className="form-content-wrapper">
         <TextareaAutosize value={title} id="title" placeholder="What would you like to get helped with?" onChange={handleTicketInput} />

@@ -12,8 +12,6 @@ export default function App() {
 
   const [userID, setUserID] = useState(null)
 
-  const [userAvatar, setUserAvatar] = useState(null)
-
   const [view, setView] = useState('home')
 
   const handleSetToken = (token) => {
@@ -22,16 +20,14 @@ export default function App() {
 
   const handleSetUser = ([id, avatar]) => {
     window.localStorage.setItem('userID', id)
+    window.localStorage.setItem('userAvatar', avatar)
     setUserID(id)
-    setUserAvatar(avatar)
     updateTicket()
   }
 
   const getAuthStatus = () => {
     let id = window.localStorage.getItem('userID')
-    let avatar = window.localStorage.getItem('userAvatar')
     if (id) setUserID(parseInt(id))
-    if (avatar) setUserAvatar(avatar)
   }
 
   const updateTicket = () => {
@@ -64,7 +60,7 @@ export default function App() {
           {userID && <Sidebar handleSetView={handleSetView} view={view} />}
         </div>
           <div className="board">
-            {userID && view === 'home' && <Home userAvatar={userAvatar} handleAddTicket={updateTicket} tickets={tickets.filter(ticket => ticket.author.id === userID)} userID={userID} updateTicket={updateTicket} />}
+            {userID && view === 'home' && <Home handleAddTicket={updateTicket} tickets={tickets.filter(ticket => ticket.author.id === userID)} userID={userID} updateTicket={updateTicket} />}
             {(!userID || view === 'explore') && 
               <>
                 {tickets.map((ticket, index) => (<Ticket key={index} ticket={ticket} userID={userID}/>))}
