@@ -20,8 +20,9 @@ export default function Home({ userAvatar, tickets, userID, updateTicket }) {
     e.preventDefault()
     if (title.length && tag) {
       axios.post('api/v1/tickets/', {title, tags: tag, author_id: window.localStorage.getItem('userID'), liked_by: ','}, {headers: {Authorization: window.localStorage.getItem('jwt')}})
-        .then(() => {
-          updateTicket()
+        .then((res) => {
+          console.log(res)
+          // updateTicket()
           setTitle('')
           setTag(0)
         })

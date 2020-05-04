@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../../utils/API';
 import { format } from 'timeago.js';
 
@@ -9,8 +9,6 @@ import CommentsModal from '../Comment/CommentsModal.js';
 
 
 export default function Ticket({ ticket }) {
-  const claimIcon = useRef(null)
-
   const [token, setToken] = useState(null)
 
   const [userID, setUserID] = useState(null)
@@ -26,11 +24,6 @@ export default function Ticket({ ticket }) {
   const [showSMS, setShowSMS] = useState(false)
 
   const [showComments, setShowComments] = useState(false)
-
-  const handleResize = () => {
-    setTooltipTop(claimIcon.current.offsetTop + claimIcon.current.clientHeight)
-    setTooltipLeft(claimIcon.current.offsetLeft + claimIcon.current.clientWidth / 2)
-  }
 
   const handleUpvote = () => {
     if (token && userID && !upvoted) {
@@ -66,7 +59,10 @@ export default function Ticket({ ticket }) {
     setShowSMS(false)
   }
 
-  const handleMouseOver = () => {
+  const handleMouseOver = (e) => {
+    console.log(e.target)
+    setTooltipTop(e.target.parentElement.offsetTop + e.target.clientHeight)
+    setTooltipLeft(e.target.parentElement.offsetLeft + e.target.clientWidth / 2)
     setTooltip(true)
   }
 
@@ -93,10 +89,8 @@ export default function Ticket({ ticket }) {
   }
 
   useEffect(() => {
-    handleResize()
     updateTokenAndID()
-    window.addEventListener('resize', handleResize)
-    window.addEventListener('click', handleCloseModal)
+    document.addEventListener('click', handleCloseModal)
   })
 
   return (
@@ -124,7 +118,7 @@ export default function Ticket({ ticket }) {
                 <span className="ticket-stats">{ticket.comments.length}</span>
               </div>
               <div className="individual-icon-wrapper">
-                <i className="material-icons md-dark phone-icon" ref={claimIcon} onClick={handleClaim} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>smartphone</i>
+                <i className="material-icons md-dark phone-icon" onClick={handleClaim} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>smartphone</i>
               </div>
               {tooltip && <Tooltip top={tooltipTop} left={tooltipLeft}/>}
             </div>
