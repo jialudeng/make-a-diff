@@ -27,24 +27,24 @@ Python3
 
 ### Installing
 
-Client
+Client directory
 ```
 npm install
 ```
 
-Server
+Server directory (please make sure venv is activated)
 ```
 pip install requirements.txt
 ```
 
 ## Development
 
-Client
+Client directory
 ```
 npm run start
 ```
 
-Server (please make sure venv is activated)
+Server directory (please make sure venv is activated)
 ``` 
 python manage.py runserver
 ```
@@ -66,10 +66,13 @@ heroku open
 * [PostgreSQL](https://www.postgresql.org/) - The database used
  
 
-## Authors
+## Author
 Jialu Deng
 
 ## Acknowledgments
 
+* Design cues from https://twitter.com
 * https://www.w3schools.com/howto/howto_css_modals.asp
 * https://www.filamentgroup.com/lab/select-css.html
+* https://tech.willandskill.se/django-rest-framework-many-to-many-and-multipart/
+
