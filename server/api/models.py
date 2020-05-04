@@ -6,7 +6,7 @@ class User(AbstractUser):
     is_student = models.BooleanField(default=True, null=False)
     avatar = models.URLField(null=True, blank=True)
     grade = models.IntegerField(default=None, null=True, blank=True)
-    phone = models.CharField(default=None, null=True, blank=True)
+    phone = models.CharField(max_length=10, default=None, null=True, blank=True)
 
 class Tag(models.Model):
     def __str__(self):
