@@ -21,19 +21,19 @@ class UserProfileView(APIView):
         return Response([request.user.id, request.user.avatar])
 
 class TicketListView(generics.ListCreateAPIView):
-    # permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
 
 class TicketView(generics.RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
 
 class TicketViewTwilio(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, ticket_id):
         ticket = Ticket.objects.get(id=ticket_id)
@@ -83,9 +83,7 @@ class CommentListView(APIView):
             return Response(serialized_comment.data)
         else:
             return Response(serialized_comment.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-
-
+ 
 class CommentView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
