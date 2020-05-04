@@ -30,7 +30,7 @@ class TicketSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
     author_id = serializers.IntegerField(write_only=True)
     tags = MultipartM2MField()
-    liked_by = MultipartM2MField()
+    liked_by = MultipartM2MField(required=False)
 
     class Meta:
         model = Ticket

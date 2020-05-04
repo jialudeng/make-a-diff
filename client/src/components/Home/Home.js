@@ -19,7 +19,7 @@ export default function Home({ userAvatar, tickets, userID, updateTicket }) {
   const handleSubmitTicket = (e) => {
     e.preventDefault()
     if (title.length && tag) {
-      axios.post('api/v1/tickets/', {title, tags: tag, author_id: window.localStorage.getItem('userID'), liked_by: ','}, {headers: {Authorization: window.localStorage.getItem('jwt')}})
+      axios.post('api/v1/tickets/', {title, tags: tag, author_id: window.localStorage.getItem('userID')}, {headers: {Authorization: window.localStorage.getItem('jwt')}})
         .then((res) => {
           console.log(res)
           // updateTicket()

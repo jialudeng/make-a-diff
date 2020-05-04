@@ -45,10 +45,6 @@ export default function Login({ handleExitLogin, handleSetToken, handleSignedIn,
             <button onClick={handleSubmitLogin} id="login-submit"><strong>Log in</strong></button>
           </form>
         </div>
-        <div className="modal-footer">
-          <span>Forgot password?</span>
-          <span>Sign up For Make A Diff</span>
-        </div>
       </div>
     </div>
   )
