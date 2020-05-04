@@ -5,9 +5,10 @@ Make a Diff is a web application which serves as a platform for newcomers in the
 Visit the deployed site here: https://make-a-diff-client.herokuapp.com/
 
 Please log in with guest credentials:
-Username: guest_poodle
-Password: demopassword
 
+Username: guest_poodle
+
+Password: demopassword
 
 ## Getting Started
 
@@ -33,6 +34,18 @@ Server
 pip install requirements.txt
 ```
 
+## Development
+
+Client
+```
+npm run start
+```
+
+Server (please make sure venv is activated)
+``` 
+python manage.py runserver
+```
+
 ## Deployment
 
 Both client and server can be deployed on Heroku. 
@@ -47,7 +60,7 @@ heroku open
 
 * [React](https://reactjs.org/) - The frontend library used
 * [Django](https://www.djangoproject.com/) - The backend framework used
-* [PostgreSQL] (https://www.postgresql.org/) - The database used
+* [PostgreSQL](https://www.postgresql.org/) - The database used
  
 
 ## Authors
