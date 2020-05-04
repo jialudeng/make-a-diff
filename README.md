@@ -19,13 +19,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-MacOS
 ```
 Node.js
 Python3
 ```
 
-### Installing
+### Installing (MacOS)
 
 Client directory
 ```
@@ -34,10 +33,10 @@ npm install
 
 Server directory (please make sure venv is activated)
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
-## Development
+## Development (MacOS)
 
 Client directory
 ```
@@ -49,7 +48,7 @@ Server directory (please make sure venv is activated)
 python manage.py runserver
 ```
 
-## Deployment
+## Deployment (MacOS)
 
 Both client and server can be deployed on Heroku. 
 After creating a heroku account and downloading heroku cli

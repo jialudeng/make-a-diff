@@ -60,7 +60,6 @@ export default function Ticket({ ticket }) {
   }
 
   const handleMouseOver = (e) => {
-    console.log(e.target)
     setTooltipTop(e.target.parentElement.offsetTop + e.target.clientHeight)
     setTooltipLeft(e.target.parentElement.offsetLeft + e.target.clientWidth / 2)
     setTooltip(true)
