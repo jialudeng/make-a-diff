@@ -9,7 +9,6 @@ import Home from './components/Home/Home.js';
 export default function App() {
   const [tickets, setTickets] = useState([])
 
-
   const [userID, setUserID] = useState(null)
 
   const [view, setView] = useState('home')
@@ -43,7 +42,6 @@ export default function App() {
     if (selected === 'messages') alert('Messages function is under construction. Please stay tuned and check back soon!')
     if (selected === 'profile') alert('Profile function is under construction. Please stay tuned and check back soon!')
   }
-
 
   useEffect(() => {
     getAuthStatus()

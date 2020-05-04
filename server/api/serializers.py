@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from api.models import *
 
-
 class MultipartM2MField(serializers.Field):
     def to_representation(self, obj):
         return obj.values_list('id', flat=True).order_by('id')
