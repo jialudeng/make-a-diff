@@ -27,7 +27,7 @@ idna==2.7
 importlib-metadata==1.6.0
 jmespath==0.9.5
 jsonschema==3.2.0
-paramiko==2.7.1
+paramiko==2.10.1
 pathspec==0.5.9
 psycopg2==2.8.3
 pycparser==2.20
